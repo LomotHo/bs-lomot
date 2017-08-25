@@ -1,0 +1,20 @@
+
+# OS
+# OSX
+.Ds_Store
+
+
+# Editer
+# sublime
+*.sublime-project
+*.sublime-workspace
+
+# idea
+*.idea
+
+
+# Language
+# nodejs
+node_modules/
+
+# python
