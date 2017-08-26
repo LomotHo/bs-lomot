@@ -5,7 +5,7 @@ const Article = model.Article;
 // User 
 // input data.userData
 const cerateUser = async (data) => {
-    await User.create(userData);
+    await User.create(data.serData);
     return true;
 } 
 // input (data.method && data.id) || (data.method data.email)
@@ -14,7 +14,6 @@ const getUser = async (data) => {
         return await User.findById(data.id);
     }
     else if (data.method === "email") {
-        let email = ctx.request.query.email;
         return await User.findOne({ where: {"email": data.email} });
     }
     else {
