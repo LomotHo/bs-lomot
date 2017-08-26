@@ -30,13 +30,13 @@ function addController(router, dir) {
     // var js_files = files.filter((f) => {
     //     return f.endsWith('.js');
     // });
-    let js_files = fs.readdirSync(__dirname).filter((f) => {
+    let js_files = fs.readdirSync(dir).filter((f) => {
         return f.endsWith(".js");
     });
 
     for (var f of js_files) {
         console.log(`process controller: ${f}...`);
-        let mapping = require(__dirname + '/' + f);
+        let mapping = require(dir + '/' + f);
         addMapping(router, mapping);
     }
 }

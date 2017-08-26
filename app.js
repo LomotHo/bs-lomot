@@ -1,8 +1,9 @@
 const Koa = require('koa');
 const app = new Koa();
 const bodyParser = require('koa-bodyparser');
-const controller = require('./controller'); 
+const path = require('path');
 const templating = require('./module/templating');
+const controller = require('./controller'); 
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -29,7 +30,7 @@ app.use(templating('view', {
 
 
 // Controler & router
-app.use(controller());
+app.use(controller(path.resolve(__dirname, './controller')));
 
 app.listen(3000);
 console.log('app started at port 3000...');
