@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const model = require("../model");
 const User = model.User;
 const Article = model.Article;
@@ -18,19 +19,6 @@ const getUserById = async (id) => {
 const getUserByEmail = async (email) => {
     return await User.findOne({ where: {"email": email} });
 }
-
-// // input (data.method && data.id) || (data.method data.email)
-// const getUser = async (data) => {
-//     if(data.method === "id") {
-//         return await User.findById(data.id);
-//     }
-//     else if (data.method === "email") {
-//         return await User.findOne({ where: {"email": data.email} });
-//     }
-//     else {
-//         return false;
-//     }
-// }
 
 
 // article
@@ -56,6 +44,54 @@ const getArticles = async (data) => {
 
 // }
 
+// login 
+// const checkPasswd = async (data) => {
+//     let userData = await getUserByEmail(data.logName);
+//     if (userData.passwd === data.passwd) {
+
+//         return true;
+//     }
+//     else {
+//         return false;
+//     }
+// }
+
+
+// useless whell
+const createJWT = async (data) => {
+    let userData = await getUserByEmail(data.logName);
+    if (userData.passwd === data.passwd) {
+        // passwd correct
+        let now = Date.now();
+        let jwtOrign = {
+            head: {
+                "alg": "HS256",
+                "typ": "JWT"
+            },
+            playload: {
+                "iss": "lomot",
+                "iat": now,
+                "exp": now + 86400000,
+                "sub": ""
+            }
+        }
+        let headerBuffer = new Buffer(JSON.stringify(jwtOrign.head), 'base64');
+        let payloadBuffer = new Buffer(JSON.stringify(jwtOrign.playload), 'base64');
+        let encodedString = headerBuffer.toString() + '.' + payloadBuffer.toString();
+        let hmac = crypto.createHmac('sha256', userData.passwd);
+        hmac.update(encodedString);
+        let signature =  hmac.digest('hex');
+        let jwt = encodedString + "." + signature;
+
+        return jwt;
+    }
+    else {
+        return false;
+    }
+
+}
+
+
 
 module.exports = {
     cerateUser,   // create user
@@ -65,4 +101,6 @@ module.exports = {
 
     createArticle, //post article
     getArticles, //get article
+
+    createJWT,
 };

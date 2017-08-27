@@ -89,11 +89,10 @@ const getArticle = async (ctx, next) => {
 
 module.exports = {
     "POST /api/user": cerateUser,   // create user
-    // "GET /api/user": getUser,   // get user by different ways, such as GET: /api/user/?method=email&email=xxx@xxxx.com
     "GET /api/user/id": getUserById,   // create user
     "GET /api/user/email": getUserByEmail,   // create user
 
-
     "POST /api/article": createArticle, //post article
     "GET /api/article": getArticle, //get article
+
 };

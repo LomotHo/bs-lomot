@@ -4,6 +4,7 @@ const bodyParser = require('koa-bodyparser');
 const path = require('path');
 const templating = require('./module/templating');
 const controller = require('./controller'); 
+const authentication = require('./module/authentication');
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -28,6 +29,11 @@ app.use(templating('view', {
     watch: !isProduction
 }));
 
+// 
+app.use(authentication());
+app.use(async (ctx, next) => {
+	await next();
+});
 
 // Controler & router
 app.use(controller(path.resolve(__dirname, './controller')));
