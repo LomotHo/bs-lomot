@@ -1,12 +1,15 @@
 const Koa = require('koa');
 const app = new Koa();
 const bodyParser = require('koa-bodyparser');
+const koajwt = require('koa-jwt');
 const path = require('path');
 const templating = require('./module/templating');
 const controller = require('./controller'); 
-const authentication = require('./module/authentication');
+const secret = require("./module/secret").secret;
 
+// const authentication = require('./module/authentication'); 
 const isProduction = process.env.NODE_ENV === 'production';
+
 
 // record URL
 app.use(async (ctx, next) => {
@@ -20,20 +23,38 @@ if (! isProduction) {
     app.use(staticFiles('/static/', __dirname + '/static'));
 }
 
-
+// bodyParser
 app.use(bodyParser());
 
-// add nunjucks as view:
+// add nunjucks as view, add ctx.render
 app.use(templating('view', {
     noCache: !isProduction,
     watch: !isProduction
 }));
 
-// 
-app.use(authentication());
-app.use(async (ctx, next) => {
-	await next();
-});
+// authentication
+// app.use(authentication());
+app.use(koajwt({ 
+	"secret": secret,
+	"iss": "lomot",
+	"iat": Date.now(),
+	"exp": Date.now() + 86400000,
+	"sub": ""
+}).unless({ 
+	path: [
+		/^\/public/, 
+		/^\/api\/article/, 
+		/^\/signin/, 
+		/^\/signup/
+	] 
+}));
+
+// app.use(async (ctx, next) => {
+//     ctx.body = ctx.state.user;
+//     await next(); 
+// });
+
+
 
 // Controler & router
 app.use(controller(path.resolve(__dirname, './controller')));

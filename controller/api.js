@@ -40,6 +40,7 @@ const getUserById = async (ctx, next) => {
 const getUserByEmail = async (ctx, next) => {
     let email = ctx.request.query.email;
     console.log("get data of email is: "+email);
+    console.log(ctx.state);
     let userData = await api.getUserByEmail(email);
 
     ctx.response.type = "application/json";
@@ -95,4 +96,7 @@ module.exports = {
     "POST /api/article": createArticle, //post article
     "GET /api/article": getArticle, //get article
 
+    // "POST /signin": signin,   // signin
+    // "POST /signup": signup,   // signin
 };
+
