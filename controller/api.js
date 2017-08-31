@@ -1,11 +1,11 @@
-const api = require("../api");
+const action = require("../action");
 
 // User 
 const cerateUser = async (ctx, next) => {
     let userData = ctx.request.body.userData;
     
     // let data = {userData};
-    if (await api.cerateUser(userData)) {
+    if (await action.user.cerateUser(userData)) {
         ctx.response.type = "application/json";
         ctx.response.body = {
             "action": "post user",
@@ -27,7 +27,7 @@ const cerateUser = async (ctx, next) => {
 const getUserById = async (ctx, next) => {
     let id = ctx.request.query.id;
 
-    let userData = await api.getUserById(id);
+    let userData = await action.user.getUserById(id);
 
     ctx.response.type = "application/json";
     ctx.response.body = {
@@ -41,7 +41,7 @@ const getUserByEmail = async (ctx, next) => {
     let email = ctx.request.query.email;
     console.log("get data of email is: "+email);
     console.log(ctx.state);
-    let userData = await api.getUserByEmail(email);
+    let userData = await action.user.getUserByEmail(email);
 
     ctx.response.type = "application/json";
     ctx.response.body = {
@@ -57,7 +57,7 @@ const createArticle = async (ctx, next) => {
     let article = ctx.request.body.article;
 
     // let data = {article};
-    await api.createArticle(article);
+    await action.article.createArticle(article);
 
     ctx.response.type = "application/json";
     ctx.response.body = {
@@ -72,7 +72,7 @@ const getArticle = async (ctx, next) => {
         limit: parseInt(ctx.request.query.limit),
         offset: parseInt(ctx.request.query.offset)
     }
-    let articles = await api.getArticles(data);
+    let articles = await action.article.getArticles(data);
 
     ctx.response.type = "application/json";
     ctx.response.body = {

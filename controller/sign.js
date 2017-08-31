@@ -1,15 +1,15 @@
-const api = require("../api");
+const action = require("../action");
 const jwt = require('jsonwebtoken');
 const secret = require("../module/secret").secret;
 
 
 const signin = async (ctx, next) => {
     let signinData = ctx.request.body.signinData;
-    let signinResult = await api.signin(signinData);
+    let signinResult = await action.user.signin(signinData);
 
     ctx.response.type = "application/json";
     if (signinResult.result) {
-    	let token = jwt.sign({logName: signinData.user}, secret);
+    	let token = jwt.sign({logName: signinData.user}, secret, { expiresIn: 3600 });
         ctx.response.body = {
             "action": "signin",
             "token": token,
@@ -29,14 +29,14 @@ const signin = async (ctx, next) => {
 const signup = async (ctx, next) => {
     let signupData = ctx.request.body.signupData; 
 
-    if (await api.emailExist(signupData.email)) {
+    if (await action.user.emailExist(signupData.email)) {
     	ctx.response.body = {
 	        "action": "signup",
 	        "err": "email exist",
 	        "result": false
 	    };
     }
-    else if (await api.cerateUser(signupData)) {
+    else if (await action.user.cerateUser(signupData)) {
 	    ctx.response.body = {
 	        "action": "signup",
 	        signupData,

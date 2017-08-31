@@ -1,4 +1,4 @@
-const api = require("../api");
+const action = require("../action");
 
 module.exports = {
     'GET /article': async (ctx, next) => {
@@ -6,7 +6,7 @@ module.exports = {
     		limit: 10,
     		offset: 0
     	}
-    	let articles = await api.getArticles(data);
+    	let articles = await action.article.getArticles(data);
         ctx.render('article.html', {
             title: 'Article of lomot',
             articles: articles.rows
