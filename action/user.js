@@ -43,7 +43,7 @@ const phoneExist = async (phone) => {
 const signin = async (signinData) => {
     // get userData.pwsswd
     // let userData = await getUserByEmail(signinData.logName);
-    let userData await User.findOne({ where: {"email": signinData.logName} });
+    let userData = await User.findOne({ where: {"email": signinData.logName} });
     if (userData === null) {
         return {
             "err": "user not exist",
