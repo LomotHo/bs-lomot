@@ -37,8 +37,6 @@ app.use(templating('view', {
 app.use(koajwt({ 
 	"secret": secret,
 	"iss": "lomot",
-	"iat": Date.now(),
-	"exp": Date.now() + 86400000,
 	"sub": ""
 }).unless({ 
 	path: [
