@@ -40,9 +40,14 @@ const getUserById = async (ctx, next) => {
 
 const getUserByEmail = async (ctx, next) => {
     let email = ctx.request.query.email;
+    let userData = await action.user.getUserByEmail(email);
+
+    // debug 
     console.log("get data of email is: "+email);
     console.log("ctx.state: " + JSON.stringify(ctx.state));
-    let userData = await action.user.getUserByEmail(email);
+    // console.log(ctx.state);
+
+
 
     ctx.response.type = "application/json";
     ctx.response.body = {

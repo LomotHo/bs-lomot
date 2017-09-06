@@ -9,7 +9,10 @@ const signin = async (ctx, next) => {
 
     ctx.response.type = "application/json";
     if (signinResult.result) {
-    	let token = jwt.sign(JSON.stringify(signinData.user), secret, { expiresIn: 3600 });
+        // let token = jwt.sign(JSON.stringify(signinData.user), secret, { expiresIn: 3600 });
+        // let token = jwt.sign(signinData.logName, secret, { expiresIn: 60 * 60 });
+    	let token = jwt.sign( {xxx: JSON.stringify(signinData.logName)}, secret, { expiresIn: 60 * 60 });
+        console.log(signinData.logName);
         ctx.response.body = {
             "action": "signin",
             "token": token,

@@ -40,6 +40,7 @@ app.use(koajwt({
 	"sub": ""
 }).unless({ 
 	path: [
+		/^\//,
 		/^\/public/, 
 		/^\/api\/article/, 
 		/^\/signin/, 
