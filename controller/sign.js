@@ -9,7 +9,7 @@ const signin = async (ctx, next) => {
 
     ctx.response.type = "application/json";
     if (signinResult.result) {
-    	  let token = jwt.sign({logName: signinData.logName}, secret, { expiresIn: 3600 });
+    	let token = jwt.sign(JSON.stringify(signinData.user), secret, { expiresIn: 3600 });
         ctx.response.body = {
             "action": "signin",
             "token": token,
@@ -30,25 +30,25 @@ const signup = async (ctx, next) => {
     let signupData = ctx.request.body.signupData; 
 
     if (await action.user.emailExist(signupData.email)) {
-        ctx.response.body = {
-            "action": "signup",
-            "err": "email exist",
-            "result": false
-        };
+    	ctx.response.body = {
+	        "action": "signup",
+	        "err": "email exist",
+	        "result": false
+	    };
     }
     else if (await action.user.cerateUser(signupData)) {
-        ctx.response.body = {
-            "action": "signup",
-            signupData,
-            "result": true
-        };
+	    ctx.response.body = {
+	        "action": "signup",
+	        signupData,
+	        "result": true
+	    };
     }
     else {
-        ctx.response.body = {
-            "action": "signup",
-            "err": "unknow err",
-            "result": false
-        };
+    	ctx.response.body = {
+	        "action": "signup",
+	        "err": "unknow err",
+	        "result": false
+	    };
     }
 }
 
