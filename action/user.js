@@ -18,6 +18,10 @@ const getUserByEmail = async (email) => {
     return await User.findOne({ where: {"email": email} });
 }
 
+const getUserData = async (logName) => {
+    return await User.findOne({ where: {"email": logName} });
+}
+
 const emailExist = async (email) => {
     let userData = await User.findOne({ where: {"email": email} });
     // console.log(userData);
@@ -78,7 +82,8 @@ module.exports = {
     cerateUser,   // create user
     getUserById,
     getUserByEmail,
-
+    getUserData,
+    
     emailExist,
     phoneExist,
 
