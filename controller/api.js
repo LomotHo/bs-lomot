@@ -52,7 +52,7 @@ const getUserByEmail = async (ctx, next) => {
     };
 }
 
-const getUserData = async (ctx, next) => {
+const getUserBaseData = async (ctx, next) => {
     if (typeof(ctx.state.user.logName) == "undefined") {
         return false;
     }
@@ -60,9 +60,14 @@ const getUserData = async (ctx, next) => {
         let userData = await action.user.getUserData(ctx.state.user.logName);
         ctx.response.type = "application/json";
         ctx.response.body = {
-            "action": "getUserData",
+            "action": "getUserBaseData",
             "result": true,
-            "userData": userData
+            "UserBaseData": {
+                "email": userData.email,
+                "phone": userData.phone,
+                "name": userData.name,
+                "gender": userData.gender
+            }
         };
     }
 }
@@ -108,7 +113,7 @@ module.exports = {
     "GET /api/user/id": getUserById,   // create user
     "GET /api/user/email": getUserByEmail,   // create user
 
-    "GET /api/user": getUserData,
+    "GET /api/user": getUserBaseData,
     "POST /api/article": createArticle, //post article
     "GET /api/article": getArticle, //get article
 
