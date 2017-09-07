@@ -21,7 +21,8 @@ const getArticles = async (data) => {
 }
 
 // const delArticle = async (ctx, next) => {
-//     let id = 
+//     let id = ctx.request.body
+
 // }
 
 
