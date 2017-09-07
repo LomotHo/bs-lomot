@@ -1,4 +1,3 @@
-const jwt = require('jsonwebtoken');
 const action = require("../action");
 
 // User 
@@ -41,7 +40,7 @@ const getUserById = async (ctx, next) => {
 const getUserByEmail = async (ctx, next) => {
     let email = ctx.request.query.email;
     console.log("get data of email is: "+email);
-    console.log("ctx.state: " + JSON.stringify(ctx.state));
+    console.log(ctx.state);
     let userData = await action.user.getUserByEmail(email);
 
     ctx.response.type = "application/json";
@@ -52,9 +51,6 @@ const getUserByEmail = async (ctx, next) => {
     };
 }
 
-const getUserData = async (ctx, next) => {
-
-}
 
 // article
 const createArticle = async (ctx, next) => {

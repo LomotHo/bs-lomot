@@ -23,5 +23,4 @@ static files
 html module
 
 
-## about the jwt 
-sign 
+
