@@ -1,0 +1,16 @@
+{
+	"name": "bs-lomot",
+	"version": "1.0.0",
+	"main": "index.js",
+	"repository": "git@github.com:LomotHo/bs-lomot.git",
+	"author": "Lomot <lomot@qq.com>",
+	"license": "MIT",
+	"scripts": {
+		"start": "node ./server/app.js",
+		"test-init": "NODE_ENV=test node ./server/module/init-db.js",
+		"test": "NODE_ENV=test node ./server/app.js"
+	},
+	"devDependencies": {
+		"request": "^2.81.0"
+	}
+}

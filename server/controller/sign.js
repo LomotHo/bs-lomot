@@ -9,7 +9,8 @@ const signin = async (ctx, next) => {
 
     ctx.response.type = "application/json";
     if (signinResult.result) {
-    	let token = jwt.sign({logName: signinData.logName}, secret, { expiresIn: 3600 });
+        let userData = await action.user.getUserData(signinData.logName);
+    	let token = jwt.sign({logName: signinData.logName, userId: userData.id}, secret, { expiresIn: 3600 });
         ctx.response.body = {
             "action": "signin",
             "token": token,
@@ -36,7 +37,7 @@ const signup = async (ctx, next) => {
             "result": false
         };
     }
-    else if (await action.user.cerateUser(signupData)) {
+    else if (await action.user.cerate(signupData)) {
         ctx.response.body = {
             "action": "signup",
             signupData,

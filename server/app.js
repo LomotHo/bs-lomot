@@ -34,6 +34,18 @@ app.use(templating('view', {
 
 // authentication
 // app.use(authentication());
+app.use( async (ctx, next) => {
+	return next().catch((err) => {
+		if (401 == err.status) {
+			console.log("Authorization failed");
+			ctx.status = 401;
+			ctx.body = 'Protected resource, use Authorization header to get access\n';
+		} else {
+			throw err;
+		}
+	});
+});
+
 app.use(koajwt({ 
 	"secret": secret,
 	"iss": "lomot",
@@ -41,11 +53,13 @@ app.use(koajwt({
 }).unless({ 
 	path: [
 		/^\/public/, 
-		/^\/api\/article/, 
 		/^\/signin/, 
 		/^\/signup/
 	] 
 }));
+
+//		/^\/api\/article/, 
+
 
 // app.use(async (ctx, next) => {
 //     ctx.body = ctx.state.user;

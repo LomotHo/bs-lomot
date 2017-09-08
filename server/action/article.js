@@ -4,9 +4,19 @@ const Article = model.Article;
 
 // article
 // input article (needed to use try !!!)
-const createArticle = async (article) => {
+const create = async (article) => {
     await Article.create(article);
     return true;
+}
+
+const getById = async (id) => {
+    let article = await Article.findOne({ where: {"id": id} });
+    if (article) {
+        return article;
+    }
+    else {
+        return false;
+    }
 }
 
 // input data.limit data.offset
@@ -20,14 +30,15 @@ const getArticles = async (data) => {
     });
 }
 
-// const delArticle = async (ctx, next) => {
-//     let id = 
-// }
+const deleteById = async (id) => {
+    await Article.destroy( { where: {"id": id} } );
+}
 
 
 module.exports = {
-    createArticle, //post article
+    create, //post article
+    getById,
     getArticles, //get article
-    // delArticle,
+    deleteById,
 };
 

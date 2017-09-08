@@ -1,14 +1,4 @@
 {
-    "name": "bs-lomot",
-    "version": "1.0.0",
-    "main": "app.js",
-    "author": "Lomot <lomot@qq.com>",
-    "license": "MIT",
-    "scripts": {
-        "start": "node app.js",
-        "test-init": "NODE_ENV=test node ./module/init-db.js",
-        "test": "NODE_ENV=test node app.js"
-    },
     "dependencies": {
         "koa": "^2.3.0",
         "koa-bodyparser": "^4.2.0",

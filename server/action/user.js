@@ -3,18 +3,18 @@ const User = model.User;
 
 // User 
 // input userData
-const cerateUser = async (userData) => {
+const cerate = async (userData) => {
     await User.create(userData);
     return true;
 } 
 
 // input id, output userdata
-const getUserById = async (id) => {
+const getById = async (id) => {
     return await User.findById(id);
 }
 
 // input email, output userdata
-const getUserByEmail = async (email) => {
+const getByEmail = async (email) => {
     return await User.findOne({ where: {"email": email} });
 }
 
@@ -67,21 +67,10 @@ const signin = async (signinData) => {
     }
 }
 
-// // checkPasswd 
-// const checkPasswd = async (signinData) => {
-//     let userData = await getUserByEmail(signinData.logName);
-//     if (userData.passwd === signinData.passwd) {
-//         return true;
-//     }
-//     else {
-//         return false;
-//     }
-// }
-
 module.exports = {
-    cerateUser,   // create user
-    getUserById,
-    getUserByEmail,
+    cerate,   // create user
+    getById,
+    getByEmail,
     getUserData,
     
     emailExist,
