@@ -51,23 +51,23 @@ const delArticle = async (ctx, next) => {
     let article = await action.article.getById(articleId);
     
     if (article == false) {
-        
-    }
-        if (article.userId === ctx.user.userId) {
-            await action.article.deleteById(articleId);
-            ctx.response.type = "application/json";
-            ctx.response.body = {
-                "action": "deleteArticle",
-                "result": true
-            };
-        }
-    else {
         ctx.response.type = "application/json";
         ctx.response.body = {
             "action": "deleteArticle",
             "result": false,
             "error": "no article id"
         };
+    }
+    if (article.userId === ctx.user.userId) {
+        await action.article.deleteById(articleId);
+        ctx.response.type = "application/json";
+        ctx.response.body = {
+            "action": "deleteArticle",
+            "result": true
+        };
+    }
+    else {
+        
     }
 }
 
